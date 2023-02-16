@@ -1,0 +1,118 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{listings, xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\lstset{style=mystyle, language=Python}
+
+\title{
+    \vspace{-3cm}Tarea 3: Ejercicio de tranformación de un punto en
+    el espacio
+    \author{
+        Universidad Autónoma de San Luis Potosí\\
+        Facultad de Ingeniería - Ing. En Sistemas Inteligentes\\
+        \textbf{Materia:} Programación de Robots\\
+        \textbf{Prof:} Dr. César Augusto Puente Montejano\\
+        \textbf{Autor:} Angel de Jesús Maldonado Juárez
+    }
+    \date{\textbf{Fecha de entrega:} martes 7 de febrero de 2023}
+}
+
+\begin{document}
+\maketitle
+\hrule\vspace*{1cm}
+
+Dado el punto \(p=(7,3,1)\), aplicar las siguientes transformaciones:
+\begin{enumerate}
+    \item Rotación de \(90\) grados en el eje \(Z\).
+    \item Traslación de \([4,-3,7]\).
+    \item Rotación de \(90\) grados en el eje \(Y\).
+\end{enumerate}
+
+\textbf{Matriz de movimiento}
+\begin{equation*}
+    \begin{bmatrix}
+        cos(90)  & 0 & sen(90) & 0 \\
+        0        & 1 & 0       & 0 \\
+        -sen(90) & 0 & cos(90) & 0 \\
+        0        & 0 & 0       & 1
+    \end{bmatrix}
+    *
+    \begin{bmatrix}
+        1 & 0 & 0 & 4  \\
+        0 & 1 & 0 & -3 \\
+        0 & 0 & 1 & 7  \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    *
+    \begin{bmatrix}
+        cos(90) & -sen(90) & 0 & 0 \\
+        sen(90) & cos(90)  & 0 & 0 \\
+        0       & 0        & 1 & 0 \\
+        0       & 0        & 0 & 1
+    \end{bmatrix}
+    =
+\end{equation*}
+
+\begin{equation*}
+    \begin{bmatrix}
+        0  & 0 & 1 & 7  \\
+        0  & 1 & 0 & -3 \\
+        -1 & 0 & 0 & -1 \\
+        0  & 0 & 0 & 1
+    \end{bmatrix}
+\end{equation*}
+
+\textbf{Matriz de movimiento aplicada al punto}
+\begin{equation*}
+    \begin{bmatrix}
+        0  & 0 & 1 & 7  \\
+        0  & 1 & 0 & -3 \\
+        -1 & 0 & 0 & -1 \\
+        0  & 0 & 0 & 1
+    \end{bmatrix}
+    *
+    \begin{bmatrix}
+        7 \\
+        3 \\
+        1 \\
+        1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        8   \\
+        0   \\
+        -11 \\
+        1
+    \end{bmatrix}
+\end{equation*}
+
+\textbf{Código en Python para obtener la solución}
+\lstinputlisting{src/main.py}
+
+\end{document}
