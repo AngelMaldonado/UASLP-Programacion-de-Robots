@@ -1,0 +1,92 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+
+\title{
+    \vspace{-3cm}Tarea 4: Matriz de transformación para método D-H
+    \author{
+        Universidad Autónoma de San Luis Potosí\\
+        Facultad de Ingeniería - Ing. En Sistemas Inteligentes\\
+        \textbf{Materia:} Programación de Robots\\
+        \textbf{Prof:} Dr. César Augusto Puente Montejano\\
+        \textbf{Autor:} Angel de Jesús Maldonado Juárez
+    }
+    \date{\textbf{Fecha de entrega:} martes 14 de febrero de 2023}
+}
+
+\begin{document}
+\maketitle
+\hrule\vspace*{1cm}
+\section*{Cadenas cinemáticas}
+Un robot está compuesto por un conjunto de enlaces, conectados
+por varias uniones. Estas uniones pueden ser simples o complejas.
+La diferencia radica en que las simples solamente tienen un
+grado de libertad (el ángulo de rotación o el desplazamiento lineal),
+mientras que otros mecanismos pueden llegar a tener hasta tres
+grados de libertad.
+
+Un robot manipulador con \(n\) uniones tendrá \(n+1\) enlaces.
+Se enumeran las uniones de \(1\) hasta \(n\), y se enumeran los
+enlaces de \(0\) hasta \(n\). Utilizando esta convención, la unión
+\(i\) conecta al enlace \(i-1\) para enlazar \(i\). \textbf{Cuando
+    la unión \(i\) se acciona, el enlace \(i\) se mueve}. Sin embargo,
+la unión \(0\) está fija, y no se mueve cuando las demás uniones se
+accionan.
+
+\section*{Método Denavit Hartenbert}
+Es posible pasar de eslabón por eslabón mediante 4 transformaciones
+básicas que dependen de las características geométricas de cada
+eslabón. Estas transformaciones son:
+
+\begin{equation}
+    ^{i-1}A_i=R_z(\theta_i)H(0,0,d_i)H(a_i,0,0)R_x(\alpha_i)
+\end{equation}
+
+Calculando la matriz de transformación utilizando la convención de
+D-H, quedaría:
+
+\begin{equation*}
+    A_i=
+    \begin{bmatrix}
+        c\theta_i & -s\theta_i & 0 & 0 \\
+        s\theta_i & c\theta_i  & 0 & 0 \\
+        0         & 0          & 1 & 0 \\
+        0         & 0          & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 0 & 0 & 0   \\
+        0 & 1 & 0 & 0   \\
+        0 & 0 & 1 & d_i \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 0 & 0 & a_i \\
+        0 & 1 & 0 & 0   \\
+        0 & 0 & 1 & 0   \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 0            & 0             & 0 \\
+        0 & c_{\alpha_i} & -s_{\alpha_i} & 0 \\
+        0 & s_{\alpha_i} & c_{\alpha_i}  & 0 \\
+        0 & 0            & 0             & 1
+    \end{bmatrix}
+\end{equation*}
+\begin{equation*}
+    =
+    \begin{bmatrix}
+        c_{\theta_i} & -s_{\theta_i}c_{\alpha_i} & s_{\theta_i}s_{\alpha_i}  & a_ic_{\theta_i} \\
+        s_{\theta_i} & c_{\theta_i}c_{\alpha_i}  & -c_{\theta_i}s_{\alpha_i} & a_is_{\theta_i} \\
+        0            & s_{\alpha_i}              & c_{\alpha_i}              & d_i             \\
+        0            & 0                         & 0                         & 1
+    \end{bmatrix}
+\end{equation*}
+
+Las 4 cantidades \(\theta_i\), \(a_i\), \(d_i\), \(\alpha_i\) son parámetros
+asociados con cada eslabón/enlace \(i\) y unión \(i\). Estos parámetros
+también son llamados \textbf{longitud del eslabón}, \textbf{giro del enlace},
+\textbf{umbral del enlace}, y \textbf{ángulo del enlace}, respectivamente.
+
+
+\end{document}
